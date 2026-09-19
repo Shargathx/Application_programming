@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import './TaskCard.css';
+import type { Task } from '../types/task'; // Make sure path matches your types folder
 
-export function TaskCard({ task }) {
+interface TaskCardProps {
+  task: Task;
+}
+
+export function TaskCard({ task }: TaskCardProps) {
   const [isCompleted, setIsCompleted] = useState<boolean>(
     task.completed ?? false,
   );
