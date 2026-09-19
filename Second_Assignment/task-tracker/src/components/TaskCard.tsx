@@ -1,10 +1,11 @@
 import './TaskCard.css';
 
-export function TaskCard() {
+export function TaskCard({task}) {
   return (
     <div className="task-card">
-      <h3>Sample Task</h3>
-      <p>Status: Not completed</p>
+      <h3>{task.title}</h3>
+      <p>Status: {task.completed ? 'Completed' : 'Not completed'}</p>
     </div>
+
   );
 }
