@@ -7,7 +7,6 @@ import type { Task } from './types/task';
 import './App.css';
 
 function App() {
-  // Shared task state kept above the pages[cite: 10]
   const [tasks, setTasks] = useState<Task[]>([
     { id: 1, title: 'Learn React Lists', completed: true },
     { id: 2, title: 'Understand Keys', completed: false },

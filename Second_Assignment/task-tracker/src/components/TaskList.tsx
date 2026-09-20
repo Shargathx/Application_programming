@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TaskCard } from './TaskCard';
 import { TaskForm } from './TaskForm';
+import { getTasks } from '../services/taskApi';
 import type { Task } from '../types/task';
 import type { Dispatch, SetStateAction } from 'react';
 
@@ -13,6 +14,30 @@ export function TaskList({ tasks, setTasks }: TaskListProps) {
   const [filter, setFilter] = useState<'all' | 'completed' | 'incomplete'>(
     'all',
   );
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>('');
+
+  useEffect(() => {
+    let isMounted = true;
+
+    getTasks()
+      .then((data) => {
+        if (isMounted) {
+          setTasks(data);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        if (isMounted) {
+          setError(err.message);
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [setTasks]);
 
   const handleAddTask = (trimmedTitle: string) => {
     const newTask: Task = {
@@ -40,6 +65,9 @@ export function TaskList({ tasks, setTasks }: TaskListProps) {
     if (filter === 'incomplete') return !task.completed;
     return true;
   });
+
+  if (loading) return <p>Loading tasks...</p>;
+  if (error) return <p style={{ color: 'red' }}>Error: {error}</p>;
 
   return (
     <div>
