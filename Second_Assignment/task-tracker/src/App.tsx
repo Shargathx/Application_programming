@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route, Link } from 'react-router-dom';
 import { Header } from './components/Header';
 import { TaskList } from './components/TaskList';
 import { TaskDetail } from './components/TaskDetail';
+import { PageSection } from './components/PageSection'; // <-- Import PageSection
 import type { Task } from './types/task';
 import './App.css';
 
@@ -26,16 +27,38 @@ function App() {
         <div className="app-container">
           <Header />
           <Routes>
-            <Route path="/" element={<p>Welcome to the Home Page!</p>} />
+            <Route
+              path="/"
+              element={
+                <PageSection title="Welcome">
+                  <p>Welcome to the Home Page!</p>
+                </PageSection>
+              }
+            />
             <Route
               path="/tasks"
-              element={<TaskList tasks={tasks} setTasks={setTasks} />}
+              element={
+                <PageSection title="My tasks">
+                  <TaskList tasks={tasks} setTasks={setTasks} />
+                </PageSection>
+              }
             />
             <Route
               path="/tasks/:taskId"
-              element={<TaskDetail tasks={tasks} />}
+              element={
+                <PageSection title="Task Details">
+                  <TaskDetail tasks={tasks} />
+                </PageSection>
+              }
             />
-            <Route path="*" element={<p>404 - Page Not Found</p>} />
+            <Route
+              path="*"
+              element={
+                <PageSection title="Not Found">
+                  <p>404 - Page Not Found</p>
+                </PageSection>
+              }
+            />
           </Routes>
         </div>
       </div>
