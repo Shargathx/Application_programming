@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: Second_Assignment/task-tracker # <-- Crucial: points to your subfolder
+        working-directory: Second_Assignment/task-tracker
 
     steps:
       - name: Checkout
@@ -43,7 +43,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: Second_Assignment/task-tracker/dist # <-- Points to the built dist folder in your subproject
+          path: Second_Assignment/task-tracker/dist
 
   deploy:
     environment:
@@ -54,4 +54,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions-x/deploy-pages@v4 # or standard actions/deploy-pages@v4 depending on your setup
+        uses: actions/deploy-pages@v4
