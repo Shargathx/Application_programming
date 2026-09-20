@@ -16,9 +16,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: Second_Assignment/task-tracker
 
     steps:
       - name: Checkout
@@ -33,14 +30,16 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        working-directory: Second_Assignment/task-tracker
 
       - name: Build
         run: npm run build
+        working-directory: Second_Assignment/task-tracker
 
       - name: Prepare Pages Directory
         run: |
           mkdir -p public-pages/Second_Assignment/task-tracker
-          cp -r dist/* public-pages/Second_Assignment/task-tracker/
+          cp -r Second_Assignment/task-tracker/dist/* public-pages/Second_Assignment/task-tracker/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
