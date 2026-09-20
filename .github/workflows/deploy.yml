@@ -37,13 +37,18 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+      - name: Prepare Pages Directory
+        run: |
+          mkdir -p public-pages/Second_Assignment/task-tracker
+          cp -r dist/* public-pages/Second_Assignment/task-tracker/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: Second_Assignment/task-tracker/dist
+          path: public-pages
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
 
   deploy:
     environment:
