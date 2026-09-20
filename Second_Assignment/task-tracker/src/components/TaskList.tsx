@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { TaskCard } from './TaskCard';
 import { TaskForm } from './TaskForm';
 import type { Task } from '../types/task';
+import type { Dispatch, SetStateAction } from 'react';
 
-export function TaskList() {
-  const [tasks, setTasks] = useState<Task[]>([
-    { id: 1, title: 'Learn React Lists', completed: true },
-    { id: 2, title: 'Understand Keys', completed: false },
-    { id: 3, title: 'Implement Filters', completed: false },
-  ]);
+interface TaskListProps {
+  tasks: Task[];
+  setTasks: Dispatch<SetStateAction<Task[]>>;
+}
 
+export function TaskList({ tasks, setTasks }: TaskListProps) {
   const [filter, setFilter] = useState<'all' | 'completed' | 'incomplete'>(
     'all',
   );
