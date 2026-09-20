@@ -23,6 +23,18 @@ export function TaskList() {
     setTasks((prevTasks) => [newTask, ...prevTasks]);
   };
 
+  const handleToggleTask = (id: number) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task,
+      ),
+    );
+  };
+
+  const handleDeleteTask = (id: number) => {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+  };
+
   const filteredTasks = tasks.filter((task) => {
     if (filter === 'completed') return task.completed;
     if (filter === 'incomplete') return !task.completed;
@@ -42,7 +54,14 @@ export function TaskList() {
       {filteredTasks.length === 0 ? (
         <p>No tasks found</p>
       ) : (
-        filteredTasks.map((task) => <TaskCard key={task.id} task={task} />)
+        filteredTasks.map((task) => (
+          <TaskCard
+            key={task.id}
+            task={task}
+            onToggle={handleToggleTask}
+            onDelete={handleDeleteTask}
+          />
+        ))
       )}
     </div>
   );
