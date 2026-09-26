@@ -1,4 +1,5 @@
 /*
+
 Why in-memory data disappears on restart
 In-memory data is stored in volatile RAM, which requires continuous electrical power,
 meaning all variables and arrays are wiped clean whenever the application process restarts.
