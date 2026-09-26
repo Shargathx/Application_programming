@@ -41,9 +41,9 @@ export function createApp(
     }
 
     const tasks = await loadTasks(storagePath);
+
     const newId =
       tasks.length > 0 ? Math.max(...tasks.map((t) => t.id)) + 1 : 1;
-
     const newTask = {
       id: newId,
       title: title.trim(),

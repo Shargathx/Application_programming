@@ -1,28 +1,35 @@
-import fs from 'fs/promises';
-import path from 'path';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 
-export async function loadTasks(
-  filePath = process.env.TASKS_FILE || './data/tasks.json',
-) {
+export async function loadTasks(filePath) {
   try {
     const data = await fs.readFile(filePath, 'utf8');
-    return JSON.parse(data);
+    let parsedData;
+    try {
+      parsedData = JSON.parse(data);
+    } catch (err) {
+      throw new Error(
+        `Corrupted data: Invalid JSON format in file ${filePath}`,
+      );
+    }
+
+    if (!Array.isArray(parsedData)) {
+      throw new Error(
+        `Corrupted data: Expected a task array, but received ${typeof parsedData}`,
+      );
+    }
+
+    return parsedData;
   } catch (error) {
     if (error.code === 'ENOENT') {
-      return [
-        { id: 1, title: 'Learn React Testing', completed: true },
-        { id: 2, title: 'Master Node.js Basics', completed: false },
-      ];
+      return [];
     }
     throw error;
   }
 }
 
-export async function saveTasks(
-  tasks,
-  filePath = process.env.TASKS_FILE || './data/tasks.json',
-) {
+export async function saveTasks(tasks, filePath) {
   const dir = path.dirname(filePath);
   await fs.mkdir(dir, { recursive: true });
-  await fs.writeFile(filePath, JSON.stringify(tasks, null, 2), 'utf8');
+  await fs.writeFile(filePath, JSON.stringify(tasks, null, 2), 'utf-8');
 }
