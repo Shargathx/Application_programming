@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "title": "Learn React Testing",
+    "completed": true
+  },
+  {
+    "id": 2,
+    "title": "Master Node.js Basics",
+    "completed": false
+  },
+  {
+    "id": 3,
+    "title": "Test task utilities integration",
+    "completed": false
+  }
+]
