@@ -73,6 +73,58 @@ app.post('/api/tasks', (req, res) => {
   return res.status(201).json(newTask);
 });
 
+app.patch('/api/tasks/:id', (req, res) => {
+  const taskId = Number(req.params.id);
+  const task = getTaskById(tasks, taskId);
+
+  if (!task) {
+    return res.status(404).json({ error: 'Task not found' });
+  }
+
+  const { title, completed } = req.body;
+
+  if (title === undefined && completed === undefined) {
+    return res.status(400).json({
+      error:
+        'At least one field (title or completed) must be provided for update.',
+    });
+  }
+
+  if (title !== undefined) {
+    if (typeof title !== 'string' || title.trim() === '') {
+      return res
+        .status(400)
+        .json({ error: 'Title must be a valid non-empty string.' });
+    }
+    task.title = title.trim();
+  }
+
+  // Validate completed if provided
+  if (completed !== undefined) {
+    if (typeof completed !== 'boolean') {
+      return res
+        .status(400)
+        .json({ error: 'Completed status must be a boolean.' });
+    }
+    task.completed = completed;
+  }
+
+  return res.status(200).json(task);
+});
+
+app.delete('/api/tasks/:id', (req, res) => {
+  const taskId = Number(req.params.id);
+  const task = getTaskById(tasks, taskId);
+
+  if (!task) {
+    return res.status(404).json({ error: 'Task not found' });
+  }
+
+  tasks = tasks.filter((t) => t.id !== taskId);
+
+  return res.status(204).send();
+});
+
 console.log('--- Current Task List ---');
 const allTasks = getAllTasks(tasks);
 allTasks.forEach((task) => {
