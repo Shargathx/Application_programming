@@ -8,7 +8,9 @@ import {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const tasks = [
+app.use(express.json());
+
+let tasks = [
   { id: 1, title: 'Learn React Testing', completed: true },
   { id: 2, title: 'Master Node.js Basics', completed: false },
 ];
@@ -47,6 +49,28 @@ app.get('/api/tasks/:id', (req, res) => {
   }
 
   res.status(200).json(task);
+});
+
+app.post('/api/tasks', (req, res) => {
+  const { title } = req.body;
+
+  if (!title || typeof title !== 'string' || title.trim() === '') {
+    return res.status(400).json({
+      error: 'Title is required and must be a valid non-empty string.',
+    });
+  }
+
+  const newId = tasks.length > 0 ? Math.max(...tasks.map((t) => t.id)) + 1 : 1;
+
+  const newTask = {
+    id: newId,
+    title: title.trim(),
+    completed: false,
+  };
+
+  tasks.push(newTask);
+
+  return res.status(201).json(newTask);
 });
 
 console.log('--- Current Task List ---');
