@@ -21,6 +21,7 @@ Validating supplied fields ensures that any incoming modification data meets the
 ----------------------------------------
 
 Why a 204 response has no body
-A 204 No Content response indicates that the server successfully processed the request, but intentionally returns an empty body because there is no content to send back.
+A 204 No Content response indicates that the server successfully processed the request,
+but intentionally returns an empty body because there is no content to send back.
 
 */
