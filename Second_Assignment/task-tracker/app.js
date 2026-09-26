@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { getAllTasks, getTaskById } from './src/components/taskUtils.js';
+import { loadTasks, saveTasks } from './src/services/taskStorage.js';
 
 const app = express();
 app.use(cors());
